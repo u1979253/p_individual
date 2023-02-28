@@ -29,3 +29,16 @@ button.menu-object:hover:not(:active){
 	height: 85px;
 }
 
+.Sortir{
+	font-size: 20px;
+	width: 10fr;
+	height: 5fr;
+}
+
+img{
+
+	display: grid;
+	grid-template-rows: 10fr 10fr 10fr;
+
+}
+
