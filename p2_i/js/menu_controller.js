@@ -16,4 +16,3 @@ function options(){
 	console.log("Options menu button");
 }
 
-
