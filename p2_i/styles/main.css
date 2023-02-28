@@ -4,7 +4,6 @@
 }
 body{
 	background: linear-gradient(to right, #5f5f5f, #727272);
-	
 }
 .menu-object{
 	margin-left: auto;
@@ -18,7 +17,7 @@ body{
 
 p{
 	text-align: center;
-	color: beige;
+	color: burlywood;
 }
 
 button.menu-object:active{
@@ -38,6 +37,7 @@ button.menu-object:hover:not(:active){
 	justify-content: center;
 	grid-template-columns: 8rem 8rem 8rem 8rem;
 	padding-bottom: 2rem;
+	padding-top: 2rem;
 }
 
 .botons{
@@ -53,8 +53,8 @@ button.menu-object:hover:not(:active){
 }
 
 hr.linia{
-    border-top: 0.1rem solid #13ccff;
-    width: 30%;
+    border-top: 0.2rem solid #ff7613;
+    width: 25%;
 }
 
 .Sortir{

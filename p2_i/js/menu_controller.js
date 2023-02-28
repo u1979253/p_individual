@@ -14,5 +14,6 @@ function exit (){
 function options(){
 	// TODO: Open options menu
 	console.log("Options menu button");
+	alert("This option is on construction")
 }
 
