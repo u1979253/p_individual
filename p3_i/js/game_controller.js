@@ -14,8 +14,8 @@ var game = new Vue({
 	},
 	created: function(){
 		var nose = localStorage.getItem("config");
-		console.log(nose);
 		options_data = JSON.parse(nose)
+		this.num_cards = options_data.cards;
 		this.username = sessionStorage.getItem("username","unknown");
 		this.items = items.slice(); // Copiem l'array
 		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
@@ -27,8 +27,7 @@ var game = new Vue({
 		}
 		if(options_data.dificulty==="hard"){
 			setTimeout(() => {
-				start=false;
-				console.log("Funciona");
+				this.start=false;
 				for (var i = 0; i < this.items.length; i++){
 					this.current_card[i].texture = back;
 				}
@@ -36,21 +35,19 @@ var game = new Vue({
 		}
 		else if(options_data.dificulty==="easy"){
 			setTimeout(() => {
-				start=false;
-				console.log("Funciona");
+				this.start=false;
 				for (var i = 0; i < this.items.length; i++){
 					this.current_card[i].texture = back;
 				}
 			},5000);
 		}
 		else {
-				setTimeout(() => {
-					start=false;
-					console.log("Funciona");
-					for (var i = 0; i < this.items.length; i++){
-						this.current_card[i].texture = back;
-					}
-				},3000);
+			setTimeout(() => {
+				this.start=false;
+				for (var i = 0; i < this.items.length; i++){
+					this.current_card[i].texture = back;
+				}
+			},3000);
 		}
 	},
 	methods: {
@@ -61,11 +58,12 @@ var game = new Vue({
 	},
 	watch: {
 		current_card: function(value){
-			if(start) return;
+			if(this.start) return;
 			else{
 				if (value.texture === back) return;
 				var front = null;
 				var i_front = -1;
+
 				for (var i = 0; i < this.current_card.length; i++){
 					if (!this.current_card[i].done && this.current_card[i].texture !== back){
 						if (front){
@@ -104,8 +102,3 @@ var game = new Vue({
 		}
 	}
 });
-
-
-
-
-
