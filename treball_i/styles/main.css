@@ -1,0 +1,66 @@
+#title{
+	font-size: 2rem;
+	line-height: 5rem;
+}
+body{
+	background: linear-gradient(to right, #575757, #858585);
+}
+.menu-object{
+	margin-left: auto;
+	margin-right: auto;
+	width: 16rem;
+	height: 4rem;
+	font-size: 1.5rem;
+	margin-top: 1rem;
+	display: grid;
+	justify-content: center;
+	grid-template-rows: 6rem;
+}
+
+p{
+	text-align: center;
+	color: burlywood;
+}
+
+button.menu-object:active{
+	font-size: 1.5rem;
+	width: 16rem;
+	height: 5rem;
+}
+
+button.menu-object:hover:not(:active){
+	font-size: 2rem;
+	width: 18rem;
+	height: 5rem;
+}
+
+.Control{ /* BOTONS INDEX DE PRACTIQUES    */
+	display: grid;
+	justify-content: center;
+	grid-template-rows: 6rem;
+}
+
+.container{  /* IMATGES JOC PRACTICA 2    */
+	display: grid;
+	justify-content: center;
+	grid-template-columns: 8rem 8rem 8rem 8rem;
+	padding-bottom: 2rem;
+	padding-top: 2rem;
+}
+
+.botons{ /* BOTONS PRÀCTICA 2    */
+	display: grid;
+	justify-content: center;
+	grid-template-rows: 6rem 6rem 6rem;
+}
+
+hr.linia{
+    border-top: 0.2rem solid #ff7613;
+    width: 25%;
+}
+
+.Sortir{ /* SORTIR JOC PRÀCTICA 2    */
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
