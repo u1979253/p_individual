@@ -7,6 +7,7 @@ class GameScene extends Phaser.Scene {
 		this.correct = 0;
 		this.username
 		this.dificulty = null;
+        this.waittime = null;
     }
 
     preload (){	
@@ -31,6 +32,7 @@ class GameScene extends Phaser.Scene {
 		this.items = this.items.slice(0, options_data.cards);
 		this.items = this.items.concat(this.items);
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
+        console.log(this.waittime)
 		let cartes = options_data.cards * 2
 		
 		var posicio = 250;
@@ -65,8 +67,7 @@ class GameScene extends Phaser.Scene {
 				card.setTexture('back');
 			});
 		});
-		
-
+	
 		let i = 0;
 		this.cards.children.iterate((card)=>{
 			card.card_id = this.items[i];
@@ -96,7 +97,9 @@ class GameScene extends Phaser.Scene {
 						this.correct++;
 						if (this.correct >= this.num_cards){
 							alert("You Win with " + this.score + " points.");
-							loadpage("../");
+							loadpage("./mode2.html");
+                            this.waittime= 500;
+                            
 						}
 					}
 					this.firstClick = null;
