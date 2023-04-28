@@ -7,7 +7,7 @@ class GameScene extends Phaser.Scene {
 		this.correct = 0;
 		this.username
 		this.dificulty = null;
-        this.waittime = 0;
+        this.waittime=0 ;
 		this.started = false;
 		this.rest = 0;
 		this.num_cards
@@ -45,7 +45,9 @@ class GameScene extends Phaser.Scene {
 		}
 		this.cards = this.physics.add.staticGroup();
 		posicio=250;
-		var game_config = JSON.parse(localStorage.getItem("configuration"));
+		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":"false","resta":0}';     
+
+		var game_config = JSON.parse(json2)
 		console.log(game_config.time)
 		//this.waittime = game_config.timne
 		if (this.waittime != 0) 
@@ -127,6 +129,7 @@ class GameScene extends Phaser.Scene {
 								console.log("olaa")
 								console.log(this.waittime)
 								console.log(this.rest)
+								console.log(this.started)
 							}				
 							var opcions = {
 								dificulty: this.dificulty,
