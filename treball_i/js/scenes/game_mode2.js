@@ -1,3 +1,4 @@
+"use strict";
 class GameScene extends Phaser.Scene {
     constructor (){
         super('GameScene');
@@ -45,14 +46,16 @@ class GameScene extends Phaser.Scene {
 		}
 		this.cards = this.physics.add.staticGroup();
 		posicio=250;
-		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":"false","resta":0}';     
+		
+		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":"false","resta":10}';     
 
 		var game_config = JSON.parse(json2)
-		console.log(game_config.time)
-		//this.waittime = game_config.timne
+		
+		this.started=game_config.start;
 		if (this.waittime != 0) 
 			this.started=true;
 		this.rest = game_config.resta
+		this.waittime = game_config.time
 		console.log(game_config)
 		console.log(this.waittime)
 		for (let i = 0; i < cartes; i++){
@@ -82,12 +85,15 @@ class GameScene extends Phaser.Scene {
 					this.waittime = 1500;
 					this.rest = 34;
 				}
+				console.log(this.waittime);
 			}
 			else{
-				this.waittime = game_config.timne
+				this.waittime = game_config.time
 				this.rest = game_config.resta
 			}
 			
+			console.log(this.waittime)
+
 			this.time.delayedCall(this.waittime, () => {
 				card.setTexture('back');
 			});
@@ -111,6 +117,7 @@ class GameScene extends Phaser.Scene {
 							alert("Game Over");
 							loadpage("../");
 						}
+						console.log(this.waittime);
 					}
 					else{
 						this.correct++;
@@ -124,13 +131,15 @@ class GameScene extends Phaser.Scene {
 								}
 							}
 							else{
-								this.waittime= this.waittime/2;
+								console.log(this.waittime)
+								this.waittime/=2;
 								this.rest = this.rest * 1.2
 								console.log("olaa")
-								console.log(this.waittime)
+								
 								console.log(this.rest)
 								console.log(this.started)
-							}				
+							}		
+							console.log(this.waittime)		
 							var opcions = {
 								dificulty: this.dificulty,
 								cards: options_data.cards,
@@ -139,6 +148,7 @@ class GameScene extends Phaser.Scene {
 								resta: this.rest
 								
 							};
+							console.log(opcions);
 							var save = function(){
 								localStorage.setItem("configuration", JSON.stringify(opcions));
 							};
