@@ -11,7 +11,8 @@ class GameScene extends Phaser.Scene {
         this.waittime=0 ;
 		this.started = false;
 		this.rest = 0;
-		this.num_cards
+		this.num_cards;
+		this.totalScore = 0;
     }
 
     preload (){	
@@ -42,6 +43,7 @@ class GameScene extends Phaser.Scene {
 			console.log("ARA AQUI")
 			this.num_cards = game_config.cards
 			this.dificulty= game_config.dificulty;
+			this.totalScore = game_config.total;
 
 		}
 		let allCards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
@@ -166,13 +168,16 @@ class GameScene extends Phaser.Scene {
 								console.log(this.rest)
 								console.log(this.started)
 							}		
-							console.log(this.waittime)		
+							console.log(this.waittime)
+							var PuntsTotals = this.totalScore + this.score;		
+							console.log(PuntsTotals);
 							var opcions = {
 								dificulty: this.dificulty,
 								cards: this.num_cards,
 								time: this.waittime,
 								start: this.started,
-								resta: this.rest
+								resta: this.rest,
+								total: PuntsTotals								
 							};
 							console.log(opcions);
 							var save = function(){
