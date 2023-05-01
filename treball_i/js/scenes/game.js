@@ -46,6 +46,7 @@ class GameScene extends Phaser.Scene {
 			posicio+=100;
 		}
 		let iterador = 0;
+		var TempsEspera
 		this.cards.children.iterate((card)=>{
 			card.card_id = this.items[iterador];
 			iterador++;
@@ -53,7 +54,7 @@ class GameScene extends Phaser.Scene {
 			card.on('pointerup', () => {
 			}, this);
 			card.setTexture(card.card_id);
-			var TempsEspera
+			
 			if(options_data.dificulty === "easy")
 				TempsEspera = 6000;
 			else if(options_data.dificulty === "normal")
@@ -86,6 +87,10 @@ class GameScene extends Phaser.Scene {
 							this.score = this.score - 20;
 						}
 						this.firstClick.enableBody(false, 0, 0, true, true);
+						card.setTexture(card.card_id);
+						setTimeout(function() {
+							card.setTexture('back');
+						}, TempsEspera/3);
 						card.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){
 							alert("Game Over");

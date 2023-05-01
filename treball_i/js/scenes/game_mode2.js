@@ -128,6 +128,10 @@ class GameScene extends Phaser.Scene {
 						this.score=this.score - this.rest
 						console.log(this.score)
 						this.firstClick.enableBody(false, 0, 0, true, true);
+						card.setTexture(card.card_id);
+						setTimeout(function() {
+							card.setTexture('back');
+						}, this.waittime/2);
 						card.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){
 							alert("Game Over");
