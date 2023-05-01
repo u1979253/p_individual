@@ -18,4 +18,8 @@ function options(){
 	loadpage("./html/options.html");
 }
 
+function eliminarStorage(){
+	var elimina = localStorage.removeItem("configuration");
+	loadpage("./mode2.html")
+}
 

@@ -25,21 +25,39 @@ class GameScene extends Phaser.Scene {
 	}
 	
     create (){	
+		
 		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 		var options_data = JSON.parse(json);
+		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":false,"resta":10}';     
+		var game_config = JSON.parse(json2)
+		console.log(game_config.start)
+		this.started=game_config.start;
+		console.log(this.started)
+		if(game_config.start === false){
+			console.log("ENTRA AQUI")
+			this.num_cards = options_data.cards
+			this.dificulty= options_data.dificulty;
+		}
+		else{
+			console.log("ARA AQUI")
+			this.num_cards = game_config.cards
+			this.dificulty= game_config.dificulty;
+
+		}
 		let allCards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
 		this.username = sessionStorage.getItem("username")
-		this.num_cards = options_data.cards
-		this.dificulty=options_data.dificulty;
+		
 		this.items = allCards;
 		this.items.sort(function(){return Math.random() - 0.5});
-		this.items = this.items.slice(0, options_data.cards);
+		this.items = this.items.slice(0, this.num_cards);
 		this.items = this.items.concat(this.items);
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
-       
-		let cartes = options_data.cards * 2
+		
+        console.log(this.num_cards);
+		let cartes = this.num_cards * 2;
 		console.log(this.waittime)
 		var posicio = 250;
+		console.log(cartes);
 		for (let i = 0; i < cartes; i++){
 			this.add.image(posicio, 300, this.items[i]);
 			posicio+=100;
@@ -47,11 +65,9 @@ class GameScene extends Phaser.Scene {
 		this.cards = this.physics.add.staticGroup();
 		posicio=250;
 		
-		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":"false","resta":10}';     
-
-		var game_config = JSON.parse(json2)
 		
-		this.started=game_config.start;
+		
+		
 		if (this.waittime != 0) 
 			this.started=true;
 		this.rest = game_config.resta
@@ -123,16 +139,23 @@ class GameScene extends Phaser.Scene {
 						this.correct++;
 						if (this.correct >= this.num_cards){
 							//alert("You Win with " + this.score + " points.");
-							if(this.waittime< 300){
-								if(this.num_cards<4){
-									this.num_cards++;
+							console.log(this.num_cards);
+							console.log("ABANS DE EL IF");
+							if(this.waittime< 150.0){
+								this.num_cards = this.num_cards +1;
+								console.log(this.num_cards);
+								console.log("DESORES DE EL IF");
+								if(this.num_cards<=4){
 									this.waittime = 3000
 									this.rest = 20
+								}
+								else{
+									alert("You Win with " + this.score + " points.");
 								}
 							}
 							else{
 								console.log(this.waittime)
-								this.waittime/=2;
+								this.waittime/=1.5;
 								this.rest = this.rest * 1.2
 								console.log("olaa")
 								
@@ -142,11 +165,10 @@ class GameScene extends Phaser.Scene {
 							console.log(this.waittime)		
 							var opcions = {
 								dificulty: this.dificulty,
-								cards: options_data.cards,
+								cards: this.num_cards,
 								time: this.waittime,
 								start: this.started,
 								resta: this.rest
-								
 							};
 							console.log(opcions);
 							var save = function(){
@@ -157,7 +179,7 @@ class GameScene extends Phaser.Scene {
 							setTimeout(function() {
 								alert("Hola después de 5 segundos!");
 								loadpage("./mode2.html");
-							}, 5000);
+							}, 3000);
                             
 						}
 						
