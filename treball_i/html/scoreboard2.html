@@ -1,23 +1,36 @@
-<html lang="en">
+<!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Phaser Game - Scoreboard Mode 3 </title>
+	<title>Ranking</title>
+  	<script src="../js/loader.js"></script>
+  	<script src="../js/menu_controller.js"></script>
+	<link rel="stylesheet" href="../styles/main.css">
 </head>
-    <body onload="rank()">
-        <h1>Ranking de puntuaciones</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Posición</th>
-                    <th>Nombre</th>
-                    <th>Puntuación</th>
-                </tr>
-            </thead>
-            <tbody id="ranking">
-                <!-- Aquí se insertarán las filas de la tabla con los datos del ranking -->
-            </tbody>
-        </table>
-    </body>
+<body>
+	<p class="menu-object" id="title">Ranking</p>
+	<div id="app" class="taula">
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(player, index) in players" :key="index">
+					<th >{{ index + 1 }}</th>
+					<td>{{ player.nom }}</td>
+					<td>{{ player.punts }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<button class="menu-object" onclick="exit()"> 
+		Exit 
+	</button>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  	<script src="../js/scenes/ranking2.js"></script>
+</body>
 </html>

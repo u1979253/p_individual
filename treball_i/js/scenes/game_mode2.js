@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
 			this.dificulty= options_data.dificulty;
 			var level = options_data.level;
 			this.waittime = 3000;
-			this.rest = 20;
+			this.rest = 2.5;
 			if(level >= 14){
 				this.num_cards = 4;
 				level = options_data.level/3;
@@ -120,7 +120,7 @@ class GameScene extends Phaser.Scene {
 								punts: this.totalScore,
 								nom: this.username					
 							};
-							var puntuacions = JSON.parse(localStorage.getItem('score')) || [];
+							var puntuacions = JSON.parse(localStorage.getItem('scoreMode2')) || [];
 							puntuacions.push(puntuacio);
 							localStorage.setItem("scoreMode2", JSON.stringify(puntuacions));
 							alert("Game Over");
@@ -136,7 +136,7 @@ class GameScene extends Phaser.Scene {
 								console.log(this.num_cards);
 								if(this.num_cards<=4){
 									this.waittime = 3000;
-									this.rest = 20;
+									this.rest = 2.5;
 								}
 								else{
 									alert("You Win with " + this.score + " points.");
@@ -144,7 +144,7 @@ class GameScene extends Phaser.Scene {
 							}
 							else{
 								this.waittime/=1.5;
-								this.rest = this.rest * 1.25;
+								this.rest = this.rest * 2;
 								console.log(this.rest)
 								console.log(this.started)
 							}		
@@ -162,7 +162,7 @@ class GameScene extends Phaser.Scene {
 								localStorage.setItem("configuration", JSON.stringify(opcions));
 							};
 							save();
-
+							loadpage("./mode2.html")
 						}
 					}
 					this.firstClick = null;
