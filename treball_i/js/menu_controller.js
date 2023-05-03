@@ -3,7 +3,7 @@ function start_game(){
 	
 	sessionStorage.setItem("username", name);
 	
-	loadpage("./html/game.html");
+	loadpage("./game.html");
 }
 
 function exit (){
@@ -19,6 +19,9 @@ function options(){
 }
 
 function eliminarStorage(){
+	name = prompt("User name");
+	
+	sessionStorage.setItem("username", name);
 	var elimina = localStorage.removeItem("configuration");
 	loadpage("./mode2.html")
 }

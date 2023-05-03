@@ -30,6 +30,7 @@ class GameScene extends Phaser.Scene {
 		this.items.sort(function(){return Math.random() - 0.5});
 		this.items = this.items.slice(0, options_data.cards);
 		this.items = this.items.concat(this.items);
+		Phaser.Utils.Array.Shuffle(this.items);
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
 		let cartes = options_data.cards * 2
 		
@@ -39,7 +40,7 @@ class GameScene extends Phaser.Scene {
 			posicio+=100;
 		}
 		this.cards = this.physics.add.staticGroup();
-		posicio=250;
+		posicio = 250;
 		 
 		for (let i = 0; i < cartes; i++){
 			this.cards.create(posicio, 300, 'back');
@@ -66,8 +67,6 @@ class GameScene extends Phaser.Scene {
 				card.setTexture('back');
 			});
 		});
-		
-
 		let i = 0;
 		this.cards.children.iterate((card)=>{
 			card.card_id = this.items[i];
@@ -86,6 +85,7 @@ class GameScene extends Phaser.Scene {
 						else {
 							this.score = this.score - 20;
 						}
+						console.log(this.score);
 						this.firstClick.enableBody(false, 0, 0, true, true);
 						card.setTexture(card.card_id);
 						setTimeout(function() {
@@ -100,6 +100,13 @@ class GameScene extends Phaser.Scene {
 					else{
 						this.correct++;
 						if (this.correct >= this.num_cards){
+							var puntuacio = {
+								punts: this.score,
+								nom: this.username					
+							};
+							var puntuacions = JSON.parse(localStorage.getItem('score')) || [];
+							puntuacions.push(puntuacio);
+							localStorage.setItem("score", JSON.stringify(puntuacions));
 							alert("You Win with " + this.score + " points.");
 							loadpage("../");
 						}

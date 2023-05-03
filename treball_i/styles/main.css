@@ -4,6 +4,10 @@
 }
 body{
 	background: linear-gradient(to right, #575757, #858585);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-weight: 400;
+  	line-height: 1.5;
+	font-size: 1rem;
 }
 .menu-object{
 	margin-left: auto;
@@ -48,6 +52,14 @@ button.menu-object:hover:not(:active){
 	padding-top: 2rem;
 }
 
+.taula{
+	display: grid;
+	justify-content: center;
+	grid-template-columns: 8rem 8rem;
+	padding-bottom: 2rem;
+	padding-left: 3rem;
+}
+
 .botons{ /* BOTONS PRÀCTICA 2    */
 	display: grid;
 	justify-content: center;
@@ -64,3 +76,20 @@ hr.linia{
 	justify-content: center;
     align-items: center;
 }
+
+table {
+	border-spacing: 10px;
+	background-color: white;
+}
+  .table td,
+  .table th {
+	padding: 0.75rem;
+	border-top: 1px solid #dee2e6;
+	border: 1px solid black;
+  }
+
+
+
+
+
+

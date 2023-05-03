@@ -7,12 +7,12 @@ class GameScene extends Phaser.Scene {
 		this.score = 100;
 		this.correct = 0;
 		this.username
-		this.dificulty = null;
         this.waittime=0 ;
 		this.started = false;
 		this.rest = 0;
 		this.num_cards;
 		this.totalScore = 0;
+		this.level = 0;
     }
 
     preload (){	
@@ -27,55 +27,60 @@ class GameScene extends Phaser.Scene {
 	
     create (){	
 		
-		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
+		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard","level":0}';
 		var options_data = JSON.parse(json);
-		var json2 = localStorage.getItem("configuration") || '{"cards":2,"dificulty":"hard","time":3000,"start":false,"resta":10}';     
-		var game_config = JSON.parse(json2)
-		console.log(game_config.start)
-		this.started=game_config.start;
-		console.log(this.started)
+		var json2 = localStorage.getItem("configuration") || '{"cards":2,"time":3000,"start":false,"resta":20, "total":0}';     
+		var game_config = JSON.parse(json2);
 		if(game_config.start === false){
 			console.log("ENTRA AQUI")
-			this.num_cards = options_data.cards
+			this.num_cards = options_data.cards;
 			this.dificulty= options_data.dificulty;
+			var level = options_data.level;
+			this.waittime = 3000;
+			this.rest = 20;
+			if(level >= 14){
+				this.num_cards = 4;
+				level = options_data.level/3;
+			}
+			else if(level < 14 && level > 7){
+				this.num_cards = 3;
+				level = options_data.level/2;
+			}
+			else{
+				this.num_cards = 2;
+			}
+			for(var it = 0; it<level; it++){
+				this.waittime= this.waittime/1.5;
+				this.rest = this.rest * 1.2;
+			}	
 		}
 		else{
-			console.log("ARA AQUI")
-			this.num_cards = game_config.cards
+			console.log("ARA AQUI");
+			this.num_cards = game_config.cards;
 			this.dificulty= game_config.dificulty;
 			this.totalScore = game_config.total;
-
+			this.waittime = game_config.time;
+			this.rest = game_config.resta;
 		}
-		let allCards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
-		this.username = sessionStorage.getItem("username")
 		
+		console.log(this.waittime);
+		let allCards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
+		this.username = sessionStorage.getItem("username");
 		this.items = allCards;
 		this.items.sort(function(){return Math.random() - 0.5});
 		this.items = this.items.slice(0, this.num_cards);
 		this.items = this.items.concat(this.items);
+		Phaser.Utils.Array.Shuffle(this.items);
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
-		
-        console.log(this.num_cards);
 		let cartes = this.num_cards * 2;
-		console.log(this.waittime)
 		var posicio = 250;
-		console.log(cartes);
 		for (let i = 0; i < cartes; i++){
 			this.add.image(posicio, 300, this.items[i]);
 			posicio+=100;
 		}
 		this.cards = this.physics.add.staticGroup();
 		posicio=250;
-		
-		
-		
-		
-		if (this.waittime != 0) 
-			this.started=true;
-		this.rest = game_config.resta
-		this.waittime = game_config.time
 		console.log(game_config)
-		console.log(this.waittime)
 		for (let i = 0; i < cartes; i++){
 			this.cards.create(posicio, 300, 'back');
 			posicio+=100;
@@ -88,30 +93,6 @@ class GameScene extends Phaser.Scene {
 			card.on('pointerup', () => {
 			}, this);
 			card.setTexture(card.card_id);
-			console.log(this.started)
-			if(!this.started){
-				if(options_data.dificulty === "easy"){
-					this.waittime = 6000;
-					console.log("passo per aqui")
-					this.rest = 10;
-				}
-				else if(options_data.dificulty === "normal"){
-					this.waittime = 3000;
-					this.rest=20
-				}
-				else{
-					this.waittime = 1500;
-					this.rest = 34;
-				}
-				console.log(this.waittime);
-			}
-			else{
-				this.waittime = game_config.time
-				this.rest = game_config.resta
-			}
-			
-			console.log(this.waittime)
-
 			this.time.delayedCall(this.waittime, () => {
 				card.setTexture('back');
 			});
@@ -127,8 +108,7 @@ class GameScene extends Phaser.Scene {
 				card.disableBody(true,true);
 				if (this.firstClick){
 					if (this.firstClick.card_id !== card.card_id){
-						this.score=this.score - this.rest
-						console.log(this.score)
+						this.score=this.score - this.rest;
 						this.firstClick.enableBody(false, 0, 0, true, true);
 						card.setTexture(card.card_id);
 						setTimeout(function() {
@@ -136,43 +116,41 @@ class GameScene extends Phaser.Scene {
 						}, this.waittime/2);
 						card.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){
+							var puntuacio = {
+								punts: this.totalScore,
+								nom: this.username					
+							};
+							var puntuacions = JSON.parse(localStorage.getItem('score')) || [];
+							puntuacions.push(puntuacio);
+							localStorage.setItem("scoreMode2", JSON.stringify(puntuacions));
 							alert("Game Over");
 							loadpage("../");
 						}
-						console.log(this.waittime);
 					}
 					else{
 						this.correct++;
 						if (this.correct >= this.num_cards){
-							//alert("You Win with " + this.score + " points.");
-							console.log(this.num_cards);
-							console.log("ABANS DE EL IF");
-							if(this.waittime< 150.0){
+							alert("You Win with " + this.score + " points.");
+							if(this.waittime< 180.0){
 								this.num_cards = this.num_cards +1;
 								console.log(this.num_cards);
-								console.log("DESORES DE EL IF");
 								if(this.num_cards<=4){
-									this.waittime = 3000
-									this.rest = 20
+									this.waittime = 3000;
+									this.rest = 20;
 								}
 								else{
 									alert("You Win with " + this.score + " points.");
 								}
 							}
 							else{
-								console.log(this.waittime)
 								this.waittime/=1.5;
-								this.rest = this.rest * 1.2
-								console.log("olaa")
-								
+								this.rest = this.rest * 1.25;
 								console.log(this.rest)
 								console.log(this.started)
 							}		
 							console.log(this.waittime)
 							var PuntsTotals = this.totalScore + this.score;		
-							console.log(PuntsTotals);
 							var opcions = {
-								dificulty: this.dificulty,
 								cards: this.num_cards,
 								time: this.waittime,
 								start: this.started,
@@ -184,14 +162,8 @@ class GameScene extends Phaser.Scene {
 								localStorage.setItem("configuration", JSON.stringify(opcions));
 							};
 							save();
-							
-							setTimeout(function() {
-								alert("Hola después de 5 segundos!");
-								loadpage("./mode2.html");
-							}, 3000);
-                            
+
 						}
-						
 					}
 					this.firstClick = null;
 				}
