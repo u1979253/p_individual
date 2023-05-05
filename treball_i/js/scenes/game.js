@@ -31,19 +31,19 @@ class GameScene extends Phaser.Scene {
 		this.items = this.items.slice(0, options_data.cards);
 		this.items = this.items.concat(this.items);
 		Phaser.Utils.Array.Shuffle(this.items);
-		this.cameras.main.setBackgroundColor(0xBFFCFF);
+	
 		let cartes = options_data.cards * 2
 		
 		var posicio = 250;
 		for (let i = 0; i < cartes; i++){
-			this.add.image(posicio, 300, this.items[i]);
+			this.add.image(posicio, 200, this.items[i]);
 			posicio+=100;
 		}
 		this.cards = this.physics.add.staticGroup();
 		posicio = 250;
 		 
 		for (let i = 0; i < cartes; i++){
-			this.cards.create(posicio, 300, 'back');
+			this.cards.create(posicio, 200, 'back');
 			posicio+=100;
 		}
 		let iterador = 0;

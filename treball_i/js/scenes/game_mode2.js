@@ -32,7 +32,6 @@ class GameScene extends Phaser.Scene {
 		var json2 = localStorage.getItem("configuration") || '{"cards":2,"time":3000,"start":false,"resta":20, "total":0}';     
 		var game_config = JSON.parse(json2);
 		if(game_config.start === false){
-			console.log("ENTRA AQUI")
 			this.num_cards = options_data.cards;
 			this.dificulty= options_data.dificulty;
 			var level = options_data.level;
@@ -51,19 +50,16 @@ class GameScene extends Phaser.Scene {
 			}
 			for(var it = 0; it<level; it++){
 				this.waittime= this.waittime/1.5;
-				this.rest = this.rest * 1.2;
+				this.rest = this.rest * 2;
 			}	
 		}
 		else{
-			console.log("ARA AQUI");
 			this.num_cards = game_config.cards;
 			this.dificulty= game_config.dificulty;
 			this.totalScore = game_config.total;
 			this.waittime = game_config.time;
 			this.rest = game_config.resta;
 		}
-		
-		console.log(this.waittime);
 		let allCards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
 		this.username = sessionStorage.getItem("username");
 		this.items = allCards;
@@ -71,18 +67,16 @@ class GameScene extends Phaser.Scene {
 		this.items = this.items.slice(0, this.num_cards);
 		this.items = this.items.concat(this.items);
 		Phaser.Utils.Array.Shuffle(this.items);
-		this.cameras.main.setBackgroundColor(0xBFFCFF);
 		let cartes = this.num_cards * 2;
 		var posicio = 250;
 		for (let i = 0; i < cartes; i++){
-			this.add.image(posicio, 300, this.items[i]);
+			this.add.image(posicio, 200, this.items[i]);
 			posicio+=100;
 		}
 		this.cards = this.physics.add.staticGroup();
 		posicio=250;
-		console.log(game_config)
 		for (let i = 0; i < cartes; i++){
-			this.cards.create(posicio, 300, 'back');
+			this.cards.create(posicio, 200, 'back');
 			posicio+=100;
 		}
 		let iterador = 0;
@@ -133,7 +127,6 @@ class GameScene extends Phaser.Scene {
 							alert("You Win with " + this.score + " points.");
 							if(this.waittime< 180.0){
 								this.num_cards = this.num_cards +1;
-								console.log(this.num_cards);
 								if(this.num_cards<=4){
 									this.waittime = 3000;
 									this.rest = 2.5;
@@ -145,10 +138,7 @@ class GameScene extends Phaser.Scene {
 							else{
 								this.waittime/=1.5;
 								this.rest = this.rest * 2;
-								console.log(this.rest)
-								console.log(this.started)
 							}		
-							console.log(this.waittime)
 							var PuntsTotals = this.totalScore + this.score;		
 							var opcions = {
 								cards: this.num_cards,
@@ -157,7 +147,6 @@ class GameScene extends Phaser.Scene {
 								resta: this.rest,
 								total: PuntsTotals								
 							};
-							console.log(opcions);
 							var save = function(){
 								localStorage.setItem("configuration", JSON.stringify(opcions));
 							};

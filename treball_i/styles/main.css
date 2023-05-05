@@ -81,14 +81,27 @@ table {
 	border-spacing: 10px;
 	background-color: white;
 }
-  .table td,
+
+.table td,
   .table th {
 	padding: 0.75rem;
 	border-top: 1px solid #dee2e6;
 	border: 1px solid black;
-  }
+}
+.taula2{
+	display: grid;
+	justify-content: center;
+	grid-template-columns: 8rem 8rem;
+	padding-bottom: 1rem;
+	
+}
 
+#game_area{
 
+	display: grid;
+	justify-content: center;
+
+}
 
 
 
