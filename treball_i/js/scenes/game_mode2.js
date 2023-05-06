@@ -37,18 +37,18 @@ class GameScene extends Phaser.Scene {
 			var level = options_data.level;
 			this.waittime = 3000;
 			this.rest = 2.5;
-			if(level >= 14){
+			if(level > 14){
 				this.num_cards = 4;
-				level = options_data.level/3;
+				level = options_data.level -14;
 			}
-			else if(level < 14 && level > 7){
+			else if(level <= 14 && level > 7){
 				this.num_cards = 3;
-				level = options_data.level/2;
+				level = options_data.level-7;
 			}
 			else{
 				this.num_cards = 2;
 			}
-			for(var it = 0; it<level; it++){
+			for(var it = 1; it<level; it++){
 				this.waittime= this.waittime/1.5;
 				this.rest = this.rest * 2;
 			}	
@@ -126,7 +126,7 @@ class GameScene extends Phaser.Scene {
 						var sortir = false;
 						if (this.correct >= this.num_cards){
 							alert("You Win with " + this.score + " points.");
-							if(this.waittime< 180.0){
+							if(this.waittime< 265.0){
 								this.num_cards = this.num_cards +1;
 								if(this.num_cards<=4){
 									this.waittime = 3000;
