@@ -123,6 +123,7 @@ class GameScene extends Phaser.Scene {
 					}
 					else{
 						this.correct++;
+						var sortir = false;
 						if (this.correct >= this.num_cards){
 							alert("You Win with " + this.score + " points.");
 							if(this.waittime< 180.0){
@@ -132,7 +133,7 @@ class GameScene extends Phaser.Scene {
 									this.rest = 2.5;
 								}
 								else{
-									alert("You Win with " + this.score + " points.");
+									sortir = true;
 								}
 							}
 							else{
@@ -151,7 +152,18 @@ class GameScene extends Phaser.Scene {
 								localStorage.setItem("configuration", JSON.stringify(opcions));
 							};
 							save();
-							loadpage("./mode2.html")
+							if(!sortir)
+								loadpage("./mode2.html");
+							else{
+								var puntuacio = {
+									punts: this.totalScore,
+									nom: this.username					
+								};
+								var puntuacions = JSON.parse(localStorage.getItem('scoreMode2')) || [];
+								puntuacions.push(puntuacio);
+								localStorage.setItem("scoreMode2", JSON.stringify(puntuacions));
+								loadpage("../");
+							}
 						}
 					}
 					this.firstClick = null;
@@ -165,4 +177,3 @@ class GameScene extends Phaser.Scene {
 	
 	update (){	}
 }
-
